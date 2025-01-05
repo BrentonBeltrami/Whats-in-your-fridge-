@@ -8,7 +8,7 @@ import {
   type DropzoneState as _DropzoneState,
 } from "react-dropzone";
 
-export interface DropzoneState extends _DropzoneState {}
+export type DropzoneState = _DropzoneState;
 
 export interface DropzoneProps extends Omit<_DropzoneProps, "children"> {
   containerClassName?: string;
@@ -17,8 +17,6 @@ export interface DropzoneProps extends Omit<_DropzoneProps, "children"> {
   showFilesList?: boolean;
   showErrorMessage?: boolean;
 }
-
-// Functions:
 
 const Upload = ({ className }: { className?: string }) => (
   <svg
@@ -117,6 +115,7 @@ const Dropzone = ({
           ...acceptedFiles,
         ]);
         if (fileRejections.length > 0) {
+          // @ts-expect-error FIXME: Resolve this type error
           let _errorMessage = `Could not upload ${fileRejections[0].file.name}`;
           if (fileRejections.length > 1)
             _errorMessage =

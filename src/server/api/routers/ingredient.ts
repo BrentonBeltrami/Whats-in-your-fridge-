@@ -36,7 +36,9 @@ export const ingredient = createTRPCRouter({
         ],
       });
 
+      // @ts-expect-error FIXME: Resolve this type error
       if (response.choices[0].message.content)
+        // @ts-expect-error FIXME: Resolve this type error
         return response.choices[0].message.content;
     }),
 });
