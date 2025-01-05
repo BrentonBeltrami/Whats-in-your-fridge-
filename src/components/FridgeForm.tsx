@@ -102,7 +102,7 @@ export const FrigdeForm = () => {
               </div>
             )}
           </div>
-          {!mutate.isPending && (
+          {!!mutate.isPending && (
             <div className="flex w-96 flex-col gap-6">
               {loading()}
               {loading()}
