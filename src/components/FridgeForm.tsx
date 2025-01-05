@@ -9,6 +9,7 @@ import Dropzone from "./ui/dropzone";
 import { useState } from "react";
 import { cn } from "~/lib/utils";
 import { KeepScreenAwake } from "./KeepScreenAwake";
+import { INGREDIENT_ERRORS } from "~/server/api/validations/ingredient";
 
 export const uploadSchema = z.object({
   base64Image: z.string(),
@@ -19,6 +20,22 @@ export const FrigdeForm = () => {
   const [preview, setPreview] = useState<string | null>(null);
 
   const mutate = api.ingredient.submitAttachment.useMutation({
+    onError: (res) => {
+      switch (res.message) {
+        case INGREDIENT_ERRORS.INCORRECT_IMAGE_TYPE:
+          toast.error(INGREDIENT_ERRORS.INCORRECT_IMAGE_TYPE);
+          break;
+        case INGREDIENT_ERRORS.NULL_RESPONSE_FROM_OPENAI:
+          toast.error(INGREDIENT_ERRORS.NULL_RESPONSE_FROM_OPENAI);
+          break;
+        default:
+          toast.error("Something went wrong, please try again.");
+          break;
+      }
+      setResponse(null);
+      setPreview(null);
+      return null;
+    },
     onSuccess(res) {
       if (!res) {
         toast.error("Something went wrong, please try again.");
@@ -85,7 +102,7 @@ export const FrigdeForm = () => {
               </div>
             )}
           </div>
-          {mutate.isPending && (
+          {!mutate.isPending && (
             <div className="flex w-96 flex-col gap-6">
               {loading()}
               {loading()}

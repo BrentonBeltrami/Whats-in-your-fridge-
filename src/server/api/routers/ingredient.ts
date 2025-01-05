@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { uploadSchema } from "~/components/FridgeForm";
 import { env } from "~/env";
+import { INGREDIENT_ERRORS } from "../validations/ingredient";
 
 const prompt = `
 You're a professional chef. You can analyze any fridge or pantry and estimate the quantity of ingredients in it.
@@ -13,12 +14,11 @@ Provide a sample recipe that can be made with the ingredients in the image after
 If there are no ingredients in the image provided, please respond with 'There are no ingredients in the image provided, please upload a new one or take a clearer photo. Thank you.'
 `;
 
-//If it this is not an image of cooking ingredients please respond with 'There are no ingredients in the image provided, please upload a new one or take a clearer photo. Thank you.'
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 export const ingredient = createTRPCRouter({
   submitAttachment: publicProcedure
     .input(uploadSchema)
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ input }) => {
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
@@ -37,6 +37,8 @@ export const ingredient = createTRPCRouter({
         ],
       });
 
+      if (response == null)
+        throw new Error(INGREDIENT_ERRORS.NULL_RESPONSE_FROM_OPENAI);
       if (response.choices?.[0]?.message?.content) {
         return response.choices[0].message.content;
       }
