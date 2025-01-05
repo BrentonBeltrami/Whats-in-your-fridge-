@@ -13,6 +13,7 @@ export type DropzoneState = _DropzoneState;
 export interface DropzoneProps extends Omit<_DropzoneProps, "children"> {
   containerClassName?: string;
   dropZoneClassName?: string;
+  style?: React.CSSProperties;
   children?: (dropzone: DropzoneState) => React.ReactNode;
   showFilesList?: boolean;
   showErrorMessage?: boolean;
@@ -101,6 +102,7 @@ const Dropzone = ({
   dropZoneClassName,
   children,
   showFilesList = true,
+  style,
   showErrorMessage = true,
   ...props
 }: DropzoneProps) => {
@@ -145,6 +147,7 @@ const Dropzone = ({
     <div className={cn("flex flex-col gap-2", containerClassName)}>
       <div
         {...dropzone.getRootProps()}
+        style={style}
         className={cn(
           "flex h-32 w-full cursor-pointer select-none items-center justify-center rounded-lg border-2 border-dashed border-gray-200 transition-all hover:bg-accent hover:text-accent-foreground",
           dropZoneClassName,
@@ -157,7 +160,7 @@ const Dropzone = ({
           <div className="text-sm font-medium">Drop your files here!</div>
         ) : (
           <div className="flex flex-col items-center gap-1.5">
-            <div className="flex flex-row items-center gap-0.5 text-sm font-medium">
+            <div className="text-md flex flex-row items-center gap-0.5 rounded-md bg-white/50 px-4 py-2 font-semibold backdrop-blur-md">
               <Upload className="mr-2 h-4 w-4" /> Upload files
             </div>
             {props.maxSize && (
