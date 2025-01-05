@@ -8,6 +8,7 @@ import { Form } from "./ui/form";
 import Dropzone from "./ui/dropzone";
 import { useState } from "react";
 import { cn } from "~/lib/utils";
+import { KeepScreenAwake } from "./KeepScreenAwake";
 
 export const uploadSchema = z.object({
   base64Image: z.string(),
@@ -46,11 +47,11 @@ export const FrigdeForm = () => {
           count of your ingredients.
         </p>
       </div>
-      <div className="grid h-full gap-6 pb-12 md:grid-cols-2">
+      <div className="grid h-full gap-5 pb-12 md:grid-cols-2">
         <Form {...form}>
           <form className="" onSubmit={form.handleSubmit(onSubmit)}>
             <Dropzone
-              containerClassName="min-h-1/2 h-full"
+              containerClassName="min-h-96 h-full"
               style={preview ? { backgroundImage: `url(${preview})` } : {}}
               dropZoneClassName={cn(
                 "h-full w-full",
@@ -71,7 +72,19 @@ export const FrigdeForm = () => {
             />
           </form>
         </Form>
-        <div>
+        <div
+          className={cn(
+            "relative rounded-lg p-4 text-neutral-900",
+            response ? "bg-neutral-100" : "bg-neutral-50",
+          )}
+        >
+          <div className="float-end flex justify-end md:block">
+            {!!response && (
+              <div className="rounded-md border-2 px-2 py-1">
+                <KeepScreenAwake />
+              </div>
+            )}
+          </div>
           {mutate.isPending && (
             <div className="flex w-96 flex-col gap-6">
               {loading()}
