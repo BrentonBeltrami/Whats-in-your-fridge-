@@ -10,6 +10,7 @@ I need you to identify the ingredients in this image of a fridge or pantry.
 I would like you to organize them by categories & give me the aproximate quantity of each ingredient. 
 Please provide the information in a markdown format with each of the categories formatted in bold.
 Provide a sample recipe that can be made with the ingredients in the image after a line break.
+If there are no ingredients in the image provided, please respond with 'There are no ingredients in the image provided, please upload a new one or take a clearer photo. Thank you.'
 `;
 
 //If it this is not an image of cooking ingredients please respond with 'There are no ingredients in the image provided, please upload a new one or take a clearer photo. Thank you.'
@@ -36,9 +37,8 @@ export const ingredient = createTRPCRouter({
         ],
       });
 
-      // @ts-expect-error FIXME: Resolve this type error
-      if (response.choices[0].message.content)
-        // @ts-expect-error FIXME: Resolve this type error
+      if (response.choices?.[0]?.message?.content) {
         return response.choices[0].message.content;
+      }
     }),
 });

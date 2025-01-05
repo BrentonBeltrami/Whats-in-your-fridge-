@@ -21,6 +21,8 @@ export const FrigdeForm = () => {
     onSuccess(res) {
       if (!res) {
         toast.error("Something went wrong, please try again.");
+        setResponse(null);
+        setPreview(null);
         return null;
       }
       setResponse(res);
@@ -32,6 +34,7 @@ export const FrigdeForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof uploadSchema>) {
+    setResponse(null);
     await mutate.mutateAsync(values);
   }
 
@@ -59,7 +62,7 @@ export const FrigdeForm = () => {
                   const file = acceptedFiles[0];
                   const reader = new FileReader();
                   reader.onloadend = async function () {
-                    setPreview(reader.result as string); // Set the Data URL as the preview
+                    setPreview(reader.result as string);
                     await onSubmit({ base64Image: reader.result as string });
                   };
                   reader.readAsDataURL(file);

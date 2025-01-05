@@ -117,8 +117,9 @@ const Dropzone = ({
           ...acceptedFiles,
         ]);
         if (fileRejections.length > 0) {
-          // @ts-expect-error FIXME: Resolve this type error
-          let _errorMessage = `Could not upload ${fileRejections[0].file.name}`;
+          let _errorMessage = fileRejections?.[0]?.file?.name
+            ? `Could not upload ${fileRejections[0].file.name}`
+            : "Unknown error";
           if (fileRejections.length > 1)
             _errorMessage =
               _errorMessage + `, and ${fileRejections.length - 1} other files.`;
@@ -153,7 +154,7 @@ const Dropzone = ({
           dropZoneClassName,
         )}
       >
-        <input {...dropzone.getInputProps()} />
+        <input multiple={false} {...dropzone.getInputProps()} />
         {children ? (
           children(dropzone)
         ) : dropzone.isDragAccept ? (
