@@ -162,7 +162,7 @@ const Dropzone = ({
         ) : (
           <div className="flex flex-col items-center gap-1.5">
             <div className="text-md flex flex-row items-center gap-0.5 rounded-md bg-white/50 px-4 py-2 font-semibold backdrop-blur-md">
-              <Upload className="mr-2 h-4 w-4" /> Upload files
+              <Upload className="mr-2 h-4 w-4" /> Upload image
             </div>
             {props.maxSize && (
               <div className="text-xs font-medium text-gray-400">

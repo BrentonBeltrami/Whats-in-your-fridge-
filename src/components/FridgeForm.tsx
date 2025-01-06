@@ -96,18 +96,16 @@ export const FrigdeForm = () => {
           )}
         >
           <div className="float-end flex justify-end md:block">
-            {!!response && (
-              <div className="rounded-md border-2 px-2 py-1">
-                <KeepScreenAwake />
-              </div>
-            )}
+            <div className="rounded-md border-2 px-2 py-1">
+              <KeepScreenAwake />
+            </div>
           </div>
           {!!mutate.isPending && (
             <div className="flex w-96 flex-col gap-6">
-              {loading()}
-              {loading()}
-              {loading()}
-              {loading()}
+              {loadingState()}
+              {loadingState()}
+              {loadingState()}
+              {loadingState()}
             </div>
           )}
           {!!response && <Markdown className="prose">{response}</Markdown>}
@@ -117,17 +115,15 @@ export const FrigdeForm = () => {
   );
 };
 
-const loading = () => {
-  const skeletons = [10, 8, 11, 7, 0, 10, 8];
-
+const loadingState = () => {
   return (
     <div className="flex flex-col gap-3">
-      {skeletons.map((width, index) => (
-        <div
-          key={index}
-          className={`h-4 w-${width}/12 animate-pulse rounded-md bg-gray-300`}
-        />
-      ))}
+      <div className="h-4 w-10/12 animate-pulse rounded-md bg-gray-300" />
+      <div className="h-4 w-8/12 animate-pulse rounded-md bg-gray-300" />
+      <div className="h-4 w-11/12 animate-pulse rounded-md bg-gray-300" />
+      <div className="h-4 w-7/12 animate-pulse rounded-md bg-gray-300" />
+      <div className="h-4 w-10/12 animate-pulse rounded-md bg-gray-300" />
+      <div className="h-4 w-8/12 animate-pulse rounded-md bg-gray-300" />
     </div>
   );
 };

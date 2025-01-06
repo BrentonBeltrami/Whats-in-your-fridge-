@@ -31,8 +31,6 @@ export const KeepScreenAwake = () => {
     }
   };
 
-  console.log(wakeLock);
-
   return (
     <div>
       {isWakeLockSupported && (
