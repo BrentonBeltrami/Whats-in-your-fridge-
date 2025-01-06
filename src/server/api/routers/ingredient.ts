@@ -1,8 +1,7 @@
 import OpenAI from "openai";
 import { createTRPCRouter, publicProcedure } from "../trpc";
-import { uploadSchema } from "~/components/FridgeForm";
 import { env } from "~/env";
-import { INGREDIENT_ERRORS } from "../validations/ingredient";
+import { INGREDIENT_ERRORS, uploadSchema } from "../validations/ingredient";
 
 const prompt = `
 You're a professional chef. You can analyze any fridge or pantry and estimate the quantity of ingredients in it.

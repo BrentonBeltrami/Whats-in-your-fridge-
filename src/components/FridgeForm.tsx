@@ -1,7 +1,7 @@
 import Markdown from "react-markdown";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
+import { type z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/utils/api";
 import { Form } from "./ui/form";
@@ -9,11 +9,10 @@ import Dropzone from "./ui/dropzone";
 import { useState } from "react";
 import { cn } from "~/lib/utils";
 import { KeepScreenAwake } from "./KeepScreenAwake";
-import { INGREDIENT_ERRORS } from "~/server/api/validations/ingredient";
-
-export const uploadSchema = z.object({
-  base64Image: z.string(),
-});
+import {
+  INGREDIENT_ERRORS,
+  uploadSchema,
+} from "~/server/api/validations/ingredient";
 
 export const FrigdeForm = () => {
   const [response, setResponse] = useState<string | null>(null);
